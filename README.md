@@ -1,2 +1,3 @@
-# Statistika-Python
-Kode Tugas Praktikum Statistika
+# Arsip Praktikum Statistika
+
+Kode tugas praktikum statistika menggunakan python
