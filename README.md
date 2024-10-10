@@ -13,8 +13,8 @@
 ### structure
 - Folder and it's purpose
 
-      + .Archive_(Praktikum-Alpro)   [ My old python excercise ]
-      + .Statistic_Tools             [ My Statistic Programs ]
+      + .Archive_(Praktikum-Alpro)   [ Old python excercise ]
+      + .Statistic_Tools             [ Statistic tools program ]
       + Praktikum_1
       + Praktikum...                 [ Just the practicum program ]
 
