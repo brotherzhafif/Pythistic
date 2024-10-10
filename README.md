@@ -6,6 +6,10 @@
 
       pip install matplotlib
 
+- Numpy
+
+      pip install numpy
+
 ### structure
 - Folder and it's purpose
 
