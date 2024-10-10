@@ -1,4 +1,4 @@
-import math
+import numpy as np
 import Dataset
 
 # Data Initiation
@@ -13,7 +13,7 @@ ranges = highest - lowest # Rangenya 25
 
 # Classes is Rounding Down
 # Math Log Base 10 In Python For Accurate Result
-classes = 1 + (3.222 * math.log(amount, 10))
+classes = 1 + (3.222 * np.log10(amount))
 classes = round(classes - 0.5)
 # print("Kelas = " + str(classes))
 
