@@ -51,7 +51,7 @@ def populate_frequency(base, top, interval):
   current_number = base - 1 # 156
   old_number = 0
 
-  while current_number < top:
+  while current_number <= top-3:
     # Finding Botom Limit Data
     old_number = current_number + 1
     lower.append(old_number) # 155
