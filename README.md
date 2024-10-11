@@ -40,11 +40,15 @@
 
 
 ###  How to run
+- Clone This Repositry -> Pythistic Folder
+
+      git clone https://github.com/brotherzhafif/Pythistic.git
+      cd Pythistic
 - Open Dataset.py -> paste your 1D array data
 
       # Example 
       data = (1,3,6,8,4)
-- Open Terminal and Run the Main.py
+- Run the Main.py
 
       python Main.py       # for universal python distribution
       python3 Main.py      # for Python 3 distribution
