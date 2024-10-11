@@ -8,19 +8,16 @@ lowest = min(dataset)
 highest = max(dataset)
 
 # Counting Data Range
-ranges = highest - lowest # Rangenya 25
-# print("Ranges = " + str(ranges))
+ranges = highest - lowest 
 
 # Classes is Rounding Down
 # Math Log Base 10 In Python For Accurate Result
 classes = 1 + (3.222 * np.log10(amount))
 classes = round(classes - 0.5)
-# print("Kelas = " + str(classes))
 
 # Interval is Rounding Up
 interval = ranges / classes 
 interval = round(interval + 0.5)
-# print("Interval = " + str(interval))
 
 # Function To Find Frequency in Dataset with Desired Range (Top and Down Limit)
 def find_frequency(bot, top):
