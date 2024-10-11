@@ -24,9 +24,9 @@
       amount = amount/length of data
       dataset = the dataset from Dataset.py
       lowest = minimum dataset value
-      highest = highest dataset value 
-      ranges = dataset range 
-      classes = Amount of dataset class
+      highest = maximum dataset value 
+      ranges = amount dataset range 
+      classes = amount of dataset class
       interval = amount of interval for each frequency
       base = frequency table bottom data start point
       top = frequency table top data stop point
@@ -35,7 +35,7 @@
       data_lower = each bottom data limit of each dataset class
       data_upper = each top data limit of each dataset class
       data_frequency = frequency for each dataset class
-      data range = combination of data_lower and data_upper showing the data frequency range
+      data_range = combination of data_lower and data_upper showing the data frequency range
 
 
 
