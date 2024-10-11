@@ -1,7 +1,7 @@
 # Practicum Statistic Archive
 > My Python Statistic Program Archive
 
-### required
+### Required
 - Matplotlib
 
       pip install matplotlib
@@ -10,7 +10,7 @@
 
       pip install numpy
 
-### structure
+### Structure
 - Folder and it's purpose
 
       + .Archive_(Praktikum-Alpro)   [ Old python excercise ]
