@@ -1,22 +1,31 @@
-# Practicum Statistic Archive
-> My Python Statistic Program Archive
+# Python Statistic Program 
+> My Statistic Tools made with Python 
 
 ### Required
 - Matplotlib
 
       pip install matplotlib
-
 - Numpy
 
       pip install numpy
 
 ### Structure
-- Folder and it's purpose
+- Program Structure
 
-      + .Archive_(Praktikum-Alpro)   [ Old python excercise ]
-      + .Statistic_Tools             [ Statistic tools program ]
-      + Praktikum_1
-      + Praktikum...                 [ Just the practicum program ]
+      + Main.py                [ Main execute file ]
+      + Dataset.py             [ Place to put the Dataset ]
+      + Frequency.py           [ Frequency Table Module ]
+      + Chart.py               [ Chart Display Module ]
+
+###  How to run
+- Open Dataset.py -> paste your 1D array data
+
+      # Example 
+      data = (1,3,6,8,4)
+- Open Terminal and Run the Main.py
+
+      python Main.py       # for universal python distribution
+      python3 Main.py      # for Python 3 distribution
 
 ### Author
     BrotherZhafif
