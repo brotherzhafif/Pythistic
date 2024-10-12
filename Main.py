@@ -1,6 +1,7 @@
+# EXAMPLE PROGRAM
 import FrequencyTable as ft
-
-# Misalnya, Anda punya data mentah seperti ini:
+ 
+# Raw Data
 data = (
   58, 67, 45, 89, 72, 60, 76, 93, 
   55, 48, 62, 85, 79, 56, 41, 90, 
@@ -9,11 +10,12 @@ data = (
   49, 87, 88, 50, 69, 84, 43, 65, 
   83, 70, 44, 61, 75, 80, 71, 63, 47,51)
 
-# Membuat objek dari FrequencyTable dengan data mentah
+# Initiate Object From The Raw Data
 table = ft.FrequencyTable(data)
 
-# Memproses data mentah menjadi tabel frekuensi
+# Processing Raw Data to Frequency Table
 table.Populate()
 
-print(table.data.ranges)      # Output: [0, 10, 20, 30] (data terproses)
-print(table.data.frequency)      # Output: [10, 20, 30, 40] (data terproses)
+# Print The Data
+print(table.data.ranges) 
+print(table.data.frequency)

@@ -56,16 +56,9 @@ class FrequencyTable:
 
             # Adding Data Range Limit Of The Class Frequency
             data_limit.append(str(old_number - 0.5) + " ~ " + str(current_number + 0.5))   
-
-        # Assign Value Each Processed Data
-        self.bottom_limit = lower
-        self.top_limit = upper
-        self.frequency = frequency
-        self.ranges = data_range
-        self.limit = data_limit
         
         # Append Processed Data into Data Attributes
-        self.data = ProcessedData(self.bottom_limit, self.top_limit, self.frequency, self.ranges, self.limit)
+        self.data = ProcessedData(lower, upper, frequency, data_range, data_limit)
 
     # Base 5 Rounding
     def roundy(self, x, base = 5):
@@ -83,7 +76,6 @@ class ProcessedData:
     def __init__(self, bottoms, tops, frequency, ranges, limit):
         self.bottom = bottoms
         self.top = tops
-        self.frequency = frequency  # frekuensi terproses
-        self.ranges = ranges         # rentang terproses
-        self.limit = limit          # batas kelas terproses
-
+        self.frequency = frequency  
+        self.ranges = ranges      
+        self.limit = limit     

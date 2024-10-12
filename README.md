@@ -5,6 +5,7 @@
 - Matplotlib
 
       pip install matplotlib
+
 - Numpy
 
       pip install numpy
@@ -12,42 +13,61 @@
 ### Structure
 - Program Structure
 
-      + Main.py                [ Main execute file ]
-      + Dataset.py             [ Place to put the Dataset ]
-      + Frequency.py           [ Frequency Table Module ]
+      + Main.py                [ Main Control file ]
+      + FrequencyTable.py      [ Frequency Table Module ]
       + Chart.py               [ Chart Display Module ]
 
 ### Module
-- Frequency.py Variables Description
+- FrequencyTable.py Variables Description
 
-      # Data Needed For Frequency Table
+      # Raw Data Needed For Frequency Table
+      dataset = sorted dataset from your main.py input
       amount = amount/length of data
-      dataset = the dataset from Dataset.py
       lowest = minimum dataset value
       highest = maximum dataset value 
-      ranges = amount dataset range 
+      range = amount dataset range ( all dataset value ) 
       classes = amount of dataset class
       interval = amount of interval for each frequency
       base = frequency table bottom data start point
-      top = frequency table top data stop point
+      top = frequency table top data stop point 
 
-      # Processed Frequency Table Data 
-      data_lower = each bottom data limit of each dataset class
-      data_upper = each top data limit of each dataset class
-      data_frequency = frequency for each dataset class
-      data_range = combination of data_lower and data_upper showing the data frequency range
-
-
+      # Processed Frequency Table Data
+      data = the main class for processed data
+      data.bottom = each bottom data limit of each dataset class
+      data.top = each top data limit of each dataset class
+      data.frequency = frequency for each dataset class
+      data.range = combination of data.top and data.bottom  showing the data frequency range
+      data.limit = data range bottom and top limit
 
 ###  How to run
 - Clone This Repositry -> Pythistic Folder
 
       git clone https://github.com/brotherzhafif/Pythistic.git
       cd Pythistic
-- Open Dataset.py -> paste your 1D array data
+  
+- Open Main.py -> paste your 1D array data into data variable
 
       # Example 
-      data = (1,3,6,8,4)
+      import FrequencyTable as ft
+
+      data = (
+        58, 67, 45, 89, 72, 60, 76, 93, 
+        55, 48, 62, 85, 79, 56, 41, 90, 
+        77, 54, 68, 82, 46, 73, 57, 92, 
+        81, 53, 66, 74, 64, 52, 91, 78, 
+        49, 87, 88, 50, 69, 84, 43, 65, 
+        83, 70, 44, 61, 75, 80, 71, 63, 47,51)
+      
+      # Initiate Object From The Raw Data
+      table = ft.FrequencyTable(data)
+      
+      # Processing Raw Data to Frequency Table
+      table.Populate()
+      
+      # Print The Data
+      print(table.data.ranges) 
+      print(table.data.frequency)
+
 - Run the Main.py
 
       python Main.py       # for universal python distribution
