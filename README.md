@@ -3,8 +3,9 @@
 
 ### Features
 - Frequency Table ( Done )
-- Display Chart (Coming Soon)
-- Data Transformation (Coming Soon)
+- Descriptive Statistics ( Work in Progress )
+- Display Chart ( Work in Progress )
+- Data Transformation ( Coming Soon )
 
 ### Required
 - Matplotlib
