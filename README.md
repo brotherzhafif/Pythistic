@@ -20,8 +20,8 @@
       + FrequencyTable.py      [ Frequency Table Module ]
       + Chart.py               [ Chart Display Module ]
 
-### Get Started
-- For detailed Documentation, please visit my [Wiki](https://github.com/brotherzhafif/Pythistic/wiki)
+### How to Use
+- For detailed Documentation, please visit [Pythistic Wiki](https://github.com/brotherzhafif/Pythistic/wiki)
 
 ### Author
     BrotherZhafif
