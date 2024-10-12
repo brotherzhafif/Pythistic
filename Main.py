@@ -19,3 +19,4 @@ table.Populate()
 # Print The Data
 print(table.data.ranges) 
 print(table.data.frequency)
+print(table.data.relative_frequency)
