@@ -38,11 +38,19 @@
 
       # Processed Frequency Table Data
       data = the main class for processed data
-      data.bottom = each bottom data limit of each dataset class
-      data.top = each top data limit of each dataset class
+      data.bottom = lowest value of each dataset class
+      data.top = highest value of each dataset class
+      data.bottom_limit = bottom limit of each class
+      data.top_limit = top limit of each class
+      data.midpoint = midpoint of each class      
       data.frequency = frequency for each dataset class
       data.range = combination of data.top and data.bottom  showing the data frequency range
       data.limit = data range bottom and top limit
+
+      data.relative_frequency = total of class relative frequency
+      data.bottom_cumulative_frequency = total of bottom cumulative frequency
+      data.top_cumulative_frequency = total of top cumulative frequency
+
 
 ###  How to run
 - Clone This Repositry -> Pythistic Folder
