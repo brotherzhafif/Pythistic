@@ -1,6 +1,11 @@
 # Python Statistic Program 
 > My Statistic Tools made with Python 
 
+### Features
+- Frequency Table (Work in Progress)
+- Display Chart (Coming Soon)
+- Data Transformation (Coming Soon)
+
 ### Required
 - Matplotlib
 
