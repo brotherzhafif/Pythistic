@@ -2,7 +2,7 @@
 > My Statistic Tools made with Python 
 
 ### Features
-- Frequency Table (Work in Progress)
+- Frequency Table ( Done )
 - Display Chart (Coming Soon)
 - Data Transformation (Coming Soon)
 
