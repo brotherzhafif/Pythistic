@@ -47,5 +47,6 @@ table = tabulate.tabulate(
     tablefmt='pipe'
 ) 
 
-print(table)
+# print(table)
+print(data.final.ranges)
 

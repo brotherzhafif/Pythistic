@@ -69,11 +69,11 @@ class FrequencyTable:
             frequency.append(current_frequency)
 
             # Adding The Number Range From Both Frequency
-            current_data_range = old_number , " ~ " , current_number
+            current_data_range = f"{old_number} ~ {current_number}"
             data_range.append(current_data_range)
 
             # Adding Data Range Limit Of The Class Frequency
-            current_data_limit = current_bot_limit , " ~ " , current_top_limit
+            current_data_limit = f"{current_bot_limit} ~ {current_top_limit}"
             data_limit.append(current_data_limit)   
 
             # Adding Data Midpoint of The Class Frequency
