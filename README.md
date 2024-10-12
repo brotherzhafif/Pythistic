@@ -15,6 +15,14 @@
 
       pip install numpy
 
+- Tabulate
+
+      pip install tabulate
+
+- Pandas
+
+      pip install pandas
+
 ### Structure
 - Program Structure
 

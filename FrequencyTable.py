@@ -94,7 +94,7 @@ class FrequencyTable:
             
 
         # Append Processed Data into Data Attributes
-        self.data = ProcessedData(bottom, top, bottom_limit, top_limit, frequency, data_range, data_limit, data_midpoint, bot_cumulative_frequency, top_cumulative_frequency, relative_frequency)
+        self.final = ProcessedData(bottom, top, bottom_limit, top_limit, frequency, data_range, data_limit, data_midpoint, bot_cumulative_frequency, top_cumulative_frequency, relative_frequency)
 
     # Base 5 Rounding
     def roundy(self, x, base = 5):
