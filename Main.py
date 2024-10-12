@@ -15,28 +15,23 @@ dataset = (
 # Initiate Object From The Raw Data
 data = ft.FrequencyTable(dataset)
 
-# Processing Raw Data to Frequency Table
-data.Populate()
-
-# Adding Percent Symbol into The Relative Frequency Coloumn
-relative_frequency_with_percentage = [
-    f"{rf * 1:.2f}%" for rf in data.final.relative_frequency
-]
+# Processing Raw Data to Frequency Grouped Frequency Table
+data.PopulateGrouped()
 
 # Transform The Data To A Frequency Table
 # Initiating The Data Using Pandas
 df = pd.DataFrame(
     {
-        "Class Interval" : data.final.ranges,
-        "Class Limit" : data.final.limit,
-        "Frequency" : data.final.frequency,
-        "Midpoint" : data.final.midpoint,
+        "Class Interval" : data.grouped.ranges,
+        "Class Limit" : data.grouped.limit,
+        "Frequency" : data.grouped.frequency,
+        "Midpoint" : data.grouped.midpoint,
         
-        "C <" : data.final.bottom_limit,
-        "CF <" : data.final.bottom_cumulative_frequency,
-        "C >" : data.final.top_cumulative_frequency,
-        "CF >" : data.final.top_cumulative_frequency,
-        "Relative Frequency" : relative_frequency_with_percentage
+        "C <" : data.grouped.bottom_limit,
+        "CF <" : data.grouped.bottom_cumulative_frequency,
+        "C >" : data.grouped.top_limit,
+        "CF >" : data.grouped.top_cumulative_frequency,
+        "Relative Frequency" : data.grouped.percentage_relative_frequency
     }
 )
 
@@ -47,6 +42,6 @@ table = tabulate.tabulate(
     tablefmt='pipe'
 ) 
 
-# print(table)
-print(data.final.ranges)
+# Print Output Data
+print(table)
 
