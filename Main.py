@@ -4,19 +4,7 @@ import pandas as pd
 import tabulate as tabulate
  
 # Raw Data
-dataset = [
-    'Mango', 'Pineapple', 'Banana', 'Banana', 'Pineapple', 'Banana', 
-    'Banana', 'Grapes', 'Pear', 'Pineapple', 'Orange', 'Strawberry', 
-    'Orange', 'Mango', 'Banana', 'Pineapple', 'Orange', 'Banana', 
-    'Strawberry', 'Pear', 'Apple', 'Banana', 'Pineapple', 'Orange', 
-    'Mango', 'Apple', 'Pear', 'Pear', 'Pear', 'Grapes', 'Pear', 
-    'Orange', 'Grapes', 'Strawberry', 'Mango', 'Orange', 'Orange', 
-    'Mango', 'Pear', 'Strawberry', 'Pear', 'Orange', 'Mango', 
-    'Mango', 'Pear', 'Grapes', 'Apple', 'Mango', 'Pineapple', 
-    'Strawberry', 'Strawberry', 'Grapes', 'Apple', 'Banana', 
-    'Grapes', 'Banana', 'Strawberry', 'Mango', 'Strawberry', 
-    'Orange', 'Pear', 'Grapes', 'Orange', 'Apple'
-]
+dataset = [1.2, 2.5, 3.1, 4.7, 1.2, 2.5, 3.8, 4.5, 2.1, 3.3, 4.8, 5.0]
 
 
 # Initiate Object From The Raw Data
