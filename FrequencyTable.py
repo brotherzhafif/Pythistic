@@ -152,6 +152,75 @@ class FrequencyTable:
                                      frequency, data_range, data_limit, data_midpoint, 
                                      bot_cumulative_frequency, top_cumulative_frequency, 
                                      relative_frequency, mode)
+    
+    # Populate Simple Table Frequency Data Method    
+    def PopulateSimple(self):
+        # Initialize general variables
+        data = sorted(set(self.dataset))  # Remove duplicates and sort the data
+        frequency = []  # To store the frequency of each class
+        top_cumulative_frequency = []  # To store top cumulative frequency for each class
+        bot_cumulative_frequency = []  # To store bottom cumulative frequency for each class
+        relative_frequency = []  # To store relative frequency for each class
+        mode = []  # To store the mode(s)
+
+        # Variables specifically for numeric data
+        top_limit = None
+        bottom_limit = None
+
+        # Check if the dataset is not entirely string-based (for numeric data)
+        if not all(isinstance(item, str) for item in self.dataset):
+            # Initialize limits for numeric data
+            top_limit = []
+            bottom_limit = []
+
+        # Single loop to process both numeric and string data
+        for current_class in data:
+            # Calculate the frequency of the current class
+            current_frequency = self.dataset.count(current_class)
+            frequency.append(current_frequency)
+
+            # Calculate the relative frequency for the current class
+            current_relative_frequency = np.round((current_frequency / self.length) * 100)
+            relative_frequency.append(current_relative_frequency)
+
+            # If the data is numeric, calculate limits and cumulative frequencies
+            if top_limit is not None and bottom_limit is not None:
+                # Calculate top and bottom limits for numeric data
+                current_top_limit = current_class + 0.5
+                current_bottom_limit = current_class - 0.5
+                top_limit.append(current_top_limit)
+                bottom_limit.append(current_bottom_limit)
+
+                # Calculate bottom cumulative frequency for numeric data
+                current_bot_cumulative_frequency = self.find_frequency(self.lowest - 1, current_class)
+                bot_cumulative_frequency.append(current_bot_cumulative_frequency)
+
+                # Calculate top cumulative frequency for numeric data
+                current_top_cumulative_frequency = self.find_frequency(current_class + 1, self.highest + 1)
+                top_cumulative_frequency.append(current_top_cumulative_frequency)
+
+            else:
+                # If the data is string-based, calculate cumulative frequencies
+                # Calculate bottom cumulative frequency for strings
+                current_bot_cumulative_frequency = self.dataset.count(current_class)
+                bot_cumulative_frequency.append(current_bot_cumulative_frequency)
+
+                # Calculate top cumulative frequency for strings
+                current_top_cumulative_frequency = sum(frequency) - current_bot_cumulative_frequency
+                top_cumulative_frequency.append(current_top_cumulative_frequency)
+
+        # Find the mode (the class with the highest frequency)
+        mode_index = [i for i, val in enumerate(frequency) if val == max(frequency)]
+        mode = [data[i] for i in mode_index]
+
+        # Create the ProcessedData object based on the data type
+        self.simple = ProcessedData(
+            data, None, None, bottom_limit, top_limit, 
+            frequency, None, None, None, 
+            bot_cumulative_frequency, top_cumulative_frequency, 
+            relative_frequency, mode
+        )
+        
 
 # Processed Data Assignment 
 class ProcessedData:
