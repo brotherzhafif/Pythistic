@@ -1,4 +1,5 @@
 import numpy as np
+from scipy import stats
 
 # Frequency Table Class 
 class FrequencyTable:
@@ -24,38 +25,56 @@ class FrequencyTable:
 
             # Interval is Rounding Up
             self.interval = self.range / self.classes 
-            self.interval = round(self.interval + 0.5, 2)  # Keep two decimal places
+            self.interval = round(self.interval + 0.5)
 
-            # Rounding Both Limits
-            self.base = self.roundy(self.lowest - 0.5)
-            self.top = self.roundy(self.highest + 0.5)
+            # Rounding Both Limits So The Data Would Be Simple And Easier To Read
+            self.base = self.roundy(self.lowest - 3)
+            self.top = self.roundy(self.highest + 3)
 
             # Mean or Average
             self.mean = (self.sum / self.length)
 
-            # Variance and Standard Deviation
+            # Formula for Variance
             self.variance = sum((x - self.mean) ** 2 for x in dataset) / self.length
+
+            # Formula for Standard Deviation
             self.deviation = (self.variance ** 0.5)
 
-            # Skewness
+            # Formula to find Dataset Skewness
             self.skewness = (self.length / ((self.length - 1) * (self.length - 2))) * \
                             sum(((x - self.mean) / self.deviation) ** 3 for x in self.dataset)
 
-            # Kurtosis
+            # Formula to find Dataset Kurtosis
             self.kurtosis = (self.length * (self.length + 1) * sum(((x - self.mean) / self.deviation) ** 4 for x in self.dataset) / 
                             ((self.length - 1) * (self.length - 2) * (self.length - 3))) - \
                             (3 * (self.length - 1) ** 2) / ((self.length - 2) * (self.length - 3))
 
-    # Base Rounding
-    def roundy(self, x, base=0.5):
+    # Base 5 Rounding
+    def roundy(self, x, base=5):
         return base * round(x / base)
 
-    # Function To Find Frequency in Dataset with Desired Range
+    # Function To Find Frequency in Dataset with Desired Range (Top and Down Limit)
     def find_frequency(self, bot, top):
-        total_frequency = sum(1 for x in self.dataset if bot < x <= top)
+        total_frequency = 0
+        # Check if the dataset contains only integers
+        is_integer_data = all(isinstance(x, int) for x in self.dataset)
+
+        if is_integer_data:
+            # Loop for integers
+            for i in range(bot, top):
+                frequency = self.dataset.count(i)
+                total_frequency += frequency
+        else:
+            # Loop for decimals
+            current = bot
+            while current < top:
+                frequency = self.dataset.count(round(current, 2))  # Round for matching
+                total_frequency += frequency
+                current += 0.01  # Increment by 0.01 for decimals
+
         return total_frequency
 
-    # Populate Grouped Frequency Table Data Method
+    # Populate Grouped Table Frequency Data Method
     def PopulateGrouped(self):
         # Initiating Used List
         top = []
@@ -73,118 +92,70 @@ class FrequencyTable:
         relative_frequency = []
         mode = []
 
-        # Frequency Table Initialization
+        # Initiating Used Parameter for Frequency Table
         interval = self.interval
-        current_number = self.base - 0.5
+        current_number = self.base - 1
         old_number = 0
 
         # Processing the Frequency Table Data
-        while current_number <= self.top:
+        while current_number <= self.top - 3:
             # Finding Class Lowest Value
-            old_number = current_number + 0.5
-            bottom.append(old_number) 
+            old_number = current_number + 1
+            bottom.append(old_number)
             
             # Finding Class Highest Value 
             current_number = current_number + interval
             top.append(current_number)
             
-            # Class Limits
+            # Append Class Bottom Limit
             current_bottom_limit = old_number - 0.5
             bottom_limit.append(current_bottom_limit)
+
+            # Append Class Top Limit
             current_top_limit = current_number + 0.5
             top_limit.append(current_top_limit)
 
-            # Frequency Calculation
-            current_frequency = self.find_frequency(old_number, current_number)
+            # Finding The Frequency That Range
+            current_frequency = self.find_frequency(old_number, current_number + 1)
             frequency.append(current_frequency)
 
-            # Data Range and Limits
-            current_data_range = f"{old_number:.2f} ~ {current_number:.2f}"
+            # Adding The Number Range From Both Frequency
+            current_data_range = f"{old_number:.2f} ~ {current_number:.2f}" if not all(isinstance(x, int) for x in self.dataset) else f"{old_number} ~ {current_number}"
             data_range.append(current_data_range)
-            current_data_limit = f"{current_bottom_limit:.2f} ~ {current_top_limit:.2f}"
+
+            # Adding Data Range Limit Of The Class Frequency
+            current_data_limit = f"{current_bottom_limit:.2f} ~ {current_top_limit:.2f}" if not all(isinstance(x, int) for x in self.dataset) else f"{current_bottom_limit} ~ {current_top_limit}"
             data_limit.append(current_data_limit)   
 
-            # Midpoint Calculation
+            # Adding Data Midpoint of The Class Frequency
             current_data_midpoint = (old_number + current_number) / 2
             data_midpoint.append(current_data_midpoint)
 
-            # Cumulative Frequencies
-            current_bot_cumulative_frequency = self.find_frequency(self.lowest - 0.5, old_number)
+            # Adding Bottom Cumulative Frequency of The Class 
+            current_bot_cumulative_frequency = self.find_frequency(self.lowest - 1, old_number)
             bot_cumulative_frequency.append(current_bot_cumulative_frequency)
-            current_top_cumulative_frequency = self.find_frequency(current_number, self.highest + 0.5)
-            top_cumulative_frequency.append(current_top_cumulative_frequency)
 
-            # Relative Frequency Calculation
-            current_relative_frequency = np.round((current_frequency / self.length) * 100, 2)
-            relative_frequency.append(current_relative_frequency)    
+            # Adding Top Cumulative Frequency of The Class 
+            current_top_cumulative_frequency = self.find_frequency(current_number + 1, self.highest + 1)
+            top_cumulative_frequency.append(current_top_cumulative_frequency)
         
-        # Find Mode
+            # Counting the Relative Frequency in Percentage
+            current_relative_frequency = np.round((current_frequency / self.length) * 100)
+            relative_frequency.append(current_relative_frequency)    
+
+        # Find Mode or Data that appears most frequently 
         mode_index = [i for i, val in enumerate(frequency) if val == max(frequency)]
         mode = [data_range[i] for i in mode_index]
         
-        # Store Processed Data
+        # Append Processed Data into Data Attributes
         self.grouped = ProcessedData(None, bottom, top, bottom_limit, top_limit, 
                                      frequency, data_range, data_limit, data_midpoint, 
                                      bot_cumulative_frequency, top_cumulative_frequency, 
                                      relative_frequency, mode)
-  
-    # Populate Simple Frequency Table Data Method    
-    def PopulateSimple(self):
-        # Initialize variables
-        data = sorted(set(self.dataset))  
-        frequency = []  
-        top_cumulative_frequency = []  
-        bot_cumulative_frequency = []  
-        relative_frequency = []  
-        mode = []  
 
-        # Check for numeric data
-        top_limit = None
-        bottom_limit = None
-
-        if not all(isinstance(item, str) for item in self.dataset):
-            top_limit = []
-            bottom_limit = []
-
-        # Process each class
-        for current_class in data:
-            current_frequency = self.dataset.count(current_class)
-            frequency.append(current_frequency)
-
-            current_relative_frequency = np.round((current_frequency / self.length) * 100, 2)
-            relative_frequency.append(current_relative_frequency)
-
-            if top_limit is not None and bottom_limit is not None:
-                current_top_limit = current_class + 0.5
-                current_bottom_limit = current_class - 0.5
-                top_limit.append(current_top_limit)
-                bottom_limit.append(current_bottom_limit)
-
-                current_bot_cumulative_frequency = self.find_frequency(self.lowest - 0.5, current_class)
-                bot_cumulative_frequency.append(current_bot_cumulative_frequency)
-
-                current_top_cumulative_frequency = self.find_frequency(current_class, self.highest + 0.5)
-                top_cumulative_frequency.append(current_top_cumulative_frequency)
-
-            else:
-                current_bot_cumulative_frequency = self.dataset.count(current_class)
-                bot_cumulative_frequency.append(current_bot_cumulative_frequency)
-                current_top_cumulative_frequency = sum(frequency) - current_bot_cumulative_frequency
-                top_cumulative_frequency.append(current_top_cumulative_frequency)
-
-        mode_index = [i for i, val in enumerate(frequency) if val == max(frequency)]
-        mode = [data[i] for i in mode_index]
-
-        self.simple = ProcessedData(
-            data, None, None, bottom_limit, top_limit, 
-            frequency, None, None, None, 
-            bot_cumulative_frequency, top_cumulative_frequency, 
-            relative_frequency, mode
-        )
-        
 # Processed Data Assignment 
 class ProcessedData:
-    # Constructor for processed data
+    # Limit (L), Frequency (F), Ranges (R), Midpoint (M), Cumulative (C), Relative (R) 
     def __init__(self, data, bot, top, bot_L, top_L, F, R, L, M, bot_CF, top_CF, RF, mode):
         self.classval = data
         self.bottom = bot
@@ -194,10 +165,11 @@ class ProcessedData:
         self.midpoint = M
         self.ranges = R      
         self.limit = L     
+
         self.frequency = F
         self.bottom_cumulative_frequency = bot_CF
         self.top_cumulative_frequency = top_CF
         self.relative_frequency = RF
         
-        self.percentage_relative_frequency = [ f"{rf * 1:.2f}%" for rf in self.relative_frequency ]
+        self.percentage_relative_frequency = [f"{rf * 1:.2f}%" for rf in self.relative_frequency]
         self.mode = mode
