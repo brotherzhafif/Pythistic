@@ -1,5 +1,18 @@
 import numpy as np
-from scipy import stats
+
+# Global Variable Used in Frequency Table Data Processing
+top = []
+bottom = []
+top_limit = []
+bottom_limit = []
+frequency = []
+data_range = []
+data_limit = []
+data_midpoint = []
+bot_cumulative_frequency = []
+top_cumulative_frequency = []
+relative_frequency = []
+mode = []
 
 # Frequency Table Class 
 class FrequencyTable:
@@ -14,8 +27,8 @@ class FrequencyTable:
         self.lowest = min(dataset) if isinstance(dataset[0], (int, float)) else None
         self.highest = max(dataset) if isinstance(dataset[0], (int, float)) else None
 
-        # Classes is Rounding Down
         if self.lowest is not None:  # Only calculate classes for numeric data
+            # Classes is Rounding Down
             self.classes = 1 + (3.222 * np.log10(self.length))
             self.classes = round(self.classes - 0.5)
 
@@ -72,26 +85,10 @@ class FrequencyTable:
                 total_frequency += frequency
                 current += 0.01  # Increment by 0.01 for decimals
 
-        return total_frequency
-
+        return total_frequency    
+    
     # Populate Grouped Table Frequency Data Method
     def PopulateGrouped(self):
-        # Initiating Used List
-        top = []
-        bottom = []
-        top_limit = []
-        bottom_limit = []
-
-        frequency = []
-        data_range = []
-        data_limit = []
-        data_midpoint = []
-
-        bot_cumulative_frequency = []
-        top_cumulative_frequency = []
-        relative_frequency = []
-        mode = []
-
         # Initiating Used Parameter for Frequency Table
         old_number = 0
         interval = self.interval
@@ -158,16 +155,7 @@ class FrequencyTable:
     def PopulateSimple(self):
         # Initialize general variables
         data = sorted(set(self.dataset))  # Remove duplicates and sort the data
-        frequency = []  # To store the frequency of each class
-        top_cumulative_frequency = []  # To store top cumulative frequency for each class
-        bot_cumulative_frequency = []  # To store bottom cumulative frequency for each class
-        relative_frequency = []  # To store relative frequency for each class
-        mode = []  # To store the mode(s)
-
-        # Variables specifically for numeric data
-        top_limit = None
-        bottom_limit = None
-
+        
         # Check if the dataset is not entirely string-based (for numeric data)
         if not all(isinstance(item, str) for item in self.dataset):
             # Initialize limits for numeric data
@@ -222,7 +210,6 @@ class FrequencyTable:
             relative_frequency, mode
         )
         
-
 # Processed Data Assignment 
 class ProcessedData:
     # Limit (L), Frequency (F), Ranges (R), Midpoint (M), Cumulative (C), Relative (R) 
@@ -235,11 +222,9 @@ class ProcessedData:
         self.midpoint = M
         self.ranges = R      
         self.limit = L     
-
         self.frequency = F
         self.bottom_cumulative_frequency = bot_CF
         self.top_cumulative_frequency = top_CF
         self.relative_frequency = RF
-        
         self.percentage_relative_frequency = [f"{rf * 1:.2f}%" for rf in self.relative_frequency]
         self.mode = mode
