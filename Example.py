@@ -4,16 +4,19 @@ import pandas as pd
 import tabulate as tabulate
  
 # Raw Data
-dataset = (
-           "Apel", "Pisang", "Jeruk", "Mangga", "Semangka", 
-    "Melon", "Pepaya", "Nanas", "Anggur", "Stroberi",
-    "Durian", "Salak", "Rambutan", "Sirsak", "Alpukat",
-    "Jambu Biji", "Pir", "Kelengkeng", "Markisa", "Leci",
-    "Ceri", "Blueberry", "Raspberry", "Kedondong", "Belimbing",
-    "Duku", "Manggis", "Kismis", "Kelengkeng", "Cempedak",
-    "Srikaya", "Delima", "Kiwi", "Plum", "Kurma", 
-    "Aprikot", "Persik", "Buah Naga", "Nangka", "Pepino"
-)
+dataset = [
+    'Mango', 'Pineapple', 'Banana', 'Banana', 'Pineapple', 'Banana', 
+    'Banana', 'Grapes', 'Pear', 'Pineapple', 'Orange', 'Strawberry', 
+    'Orange', 'Mango', 'Banana', 'Pineapple', 'Orange', 'Banana', 
+    'Strawberry', 'Pear', 'Apple', 'Banana', 'Pineapple', 'Orange', 
+    'Mango', 'Apple', 'Pear', 'Pear', 'Pear', 'Grapes', 'Pear', 
+    'Orange', 'Grapes', 'Strawberry', 'Mango', 'Orange', 'Orange', 
+    'Mango', 'Pear', 'Strawberry', 'Pear', 'Orange', 'Mango', 
+    'Mango', 'Pear', 'Grapes', 'Apple', 'Mango', 'Pineapple', 
+    'Strawberry', 'Strawberry', 'Grapes', 'Apple', 'Banana', 
+    'Grapes', 'Banana', 'Strawberry', 'Mango', 'Strawberry', 
+    'Orange', 'Pear', 'Grapes', 'Orange', 'Apple'
+]
 
 # Initiate Object From The Raw Data
 data = ft.FrequencyTable(dataset)
@@ -21,7 +24,6 @@ data = ft.FrequencyTable(dataset)
 # Processing Raw Data to Frequency Grouped Frequency Table
 data.PopulateGrouped() # Grouped Data
 data.PopulateSimple() # Simple Data
-data.PopulateString() # String Data
 
 # Transform The Data To A Frequency Table
 # Initiating The Data Using Pandas
@@ -41,31 +43,12 @@ dfg = pd.DataFrame(
     }
 )
 
-# # Simple Populated Data
+# Simple Populated Data
 dfs = pd.DataFrame(
     {
         "Class" : data.simple.classval,
         "Frequency" : data.simple.frequency,
-        
-        "C <" : data.simple.bottom_limit,
-        "CF <" : data.simple.bottom_cumulative_frequency,
-        "C >" : data.simple.top_limit,
-        "CF >" : data.simple.top_cumulative_frequency,
         "Relative Frequency" : data.simple.percentage_relative_frequency
-    }
-)
-
-# Simple Populated Data
-dfa = pd.DataFrame(
-    {
-        "Class" : data.text.classval,
-        "Frequency" : data.text.frequency,
-        
-        "C <" : data.text.bottom_limit,
-        "CF <" : data.text.bottom_cumulative_frequency,
-        "C >" : data.text.top_limit,
-        "CF >" : data.text.top_cumulative_frequency,
-        "Relative Frequency" : data.text.percentage_relative_frequency
     }
 )
 
@@ -82,16 +65,9 @@ tablegrouped = tabulate.tabulate(
     tablefmt='pipe',
 )
 
-tablestring = tabulate.tabulate(
-    dfa,
-    headers='keys',
-    tablefmt='pipe',
-)
-
 # Print The Processed Data
 print(tablesimple)
 print(tablegrouped)
-print(tablestring)
 
 
 
