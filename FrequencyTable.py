@@ -93,12 +93,13 @@ class FrequencyTable:
         mode = []
 
         # Initiating Used Parameter for Frequency Table
+        old_number = 0
         interval = self.interval
         current_number = self.base - 1
-        old_number = 0
+        current_top_cumulative_frequency = 1
 
         # Processing the Frequency Table Data
-        while current_number <= self.top - 3:
+        while current_top_cumulative_frequency != 0:
             # Finding Class Lowest Value
             old_number = current_number + 1
             bottom.append(old_number)
