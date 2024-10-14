@@ -20,6 +20,7 @@
       + Main.py                [ Main Control file ]
       + FrequencyTable.py      [ Frequency Table Module ]
       + Chart.py               [ Chart Display Module ]
+      + Transform.py           [ Data Transformation Module ]
 
 ### How to Use
 - For detailed Documentation, please visit [Pythistic Wiki](https://github.com/brotherzhafif/Pythistic/wiki)
