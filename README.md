@@ -2,10 +2,10 @@
 > My Statistic Tools made with Python 
 
 ### Features
-- Frequency Table ( Done )
-- Descriptive Statistics ( Done )
-- Display Chart ( Work in Progress )
-- Data Transformation ( Work in Progress )
+- Frequency Table
+- Descriptive Statistics
+- Display Chart
+- Data Transformation
 
 ### Required
 - Matplotlib
