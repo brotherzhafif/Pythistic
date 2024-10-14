@@ -62,6 +62,26 @@ class FrequencyTable:
                             ((self.length - 1) * (self.length - 2) * (self.length - 3))) - \
                             (3 * (self.length - 1) ** 2) / ((self.length - 2) * (self.length - 3))
 
+    # Method to reset the processed data
+    def reset_data(self):
+        global top, bottom, top_limit, bottom_limit, frequency
+        global data_range, data_limit, data_midpoint
+        global bot_cumulative_frequency, top_cumulative_frequency, relative_frequency, mode
+
+        # Clear all global variables used for data processing
+        top.clear()
+        bottom.clear()
+        top_limit.clear()
+        bottom_limit.clear()
+        frequency.clear()
+        data_range.clear()
+        data_limit.clear()
+        data_midpoint.clear()
+        bot_cumulative_frequency.clear()
+        top_cumulative_frequency.clear()
+        relative_frequency.clear()
+        mode.clear()
+
     # Base 5 Rounding
     def roundy(self, x, base=5):
         return base * round(x / base)
@@ -86,9 +106,12 @@ class FrequencyTable:
                 current += 0.01  # Increment by 0.01 for decimals
 
         return total_frequency    
-    
+
     # Populate Grouped Table Frequency Data Method
     def PopulateGrouped(self):
+        # Reset data before populating
+        self.reset_data()
+
         # Initiating Used Parameter for Frequency Table
         old_number = 0
         interval = self.interval
@@ -153,6 +176,9 @@ class FrequencyTable:
     
     # Populate Simple Table Frequency Data Method    
     def PopulateSimple(self):
+        # Reset data before populating
+        self.reset_data()
+
         # Initialize general variables
         data = sorted(set(self.dataset))  # Remove duplicates and sort the data
         
