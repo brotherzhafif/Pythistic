@@ -9,6 +9,8 @@
 
 ### Required
 - Matplotlib
+- Matplotlib_Venn
+- Seaborn
 - Numpy
 - Tabulate
 - Pandas
