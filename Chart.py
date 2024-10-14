@@ -1,5 +1,6 @@
 # Chart.py
 import matplotlib.pyplot as plt
+import numpy as np
 from matplotlib_venn import venn2, venn3
 
 class Chart:
@@ -22,11 +23,19 @@ class Chart:
         if self.ylabel:
             plt.ylabel(self.ylabel)
 
-    def box(self, data):
-        # Prepare a box diagram for visualizing the distribution of a dataset.
+    def box(self, data, labels=None):
+        # Prepare a bar chart to visualize the values in a box-like manner.
         self.figure = plt.figure(figsize=(10, 6))
-        plt.boxplot(data)
+        bar_width = 0.5  # Width of the bars
+        indices = range(len(data))  # Indices for the bars
+
+        plt.bar(indices, data, width=bar_width, alpha=0.7, color='b')
+
+        if labels:
+            plt.xticks(indices, labels)  # Set the x-ticks to the provided labels
+
         self._apply_common_properties()
+        plt.grid(axis='y')  # Add gridlines to the y-axis for better readability
 
     def pie(self, data, labels):
         # Prepare a pie chart to show percentage distribution.

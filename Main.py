@@ -1,5 +1,6 @@
 # EXAMPLE PROGRAM
 import FrequencyTable as ft
+import Chart as ct
 import pandas as pd
 import tabulate as tabulate
  
@@ -69,3 +70,17 @@ tablegrouped = tabulate.tabulate(
 # print(tablesimple)
 print(tablegrouped)
 
+
+# Initialize the chart object with common properties
+chart = ct.Chart(title="Dataset Box Diagram", xlabel="Data", ylabel="Value")
+
+# Prepare a box diagram
+chart.box(dataset)
+
+# Display the prepared chart
+chart.show()
+
+# Example for pie chart
+chart = ct.Chart(title="Grouped Frequency Pie Chart")
+chart.pie(data.grouped.frequency, labels=data.grouped.ranges)
+chart.show()
