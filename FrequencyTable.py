@@ -108,69 +108,77 @@ class FrequencyTable:
 
     # Populate Grouped Table Frequency Data Method
     def PopulateGrouped(self):
-        self.reset()  # Reset the frequency table data before processing
+        try:
+            # Check if the dataset contains text
+            if any(isinstance(item, str) for item in self.dataset):
+                raise ValueError("Text data is not allowed for grouped frequency tables. Please provide numeric data only.")
 
-        # Initiating Used Parameter for Frequency Table
-        old_number = 0
-        interval = self.interval
-        current_number = self.base - 1
-        current_top_cumulative_frequency = 1
+            self.reset()  # Reset the frequency table data before processing
 
-        # Processing the Frequency Table Data
-        while current_top_cumulative_frequency != 0:
-            # Finding Class Lowest Value
-            old_number = current_number + 1
-            bottom.append(old_number)
+            # Initiating Used Parameter for Frequency Table
+            old_number = 0
+            interval = self.interval
+            current_number = self.base - 1
+            current_top_cumulative_frequency = 1
+
+            # Processing the Frequency Table Data
+            while current_top_cumulative_frequency != 0:
+                # Finding Class Lowest Value
+                old_number = current_number + 1
+                bottom.append(old_number)
+                
+                # Finding Class Highest Value 
+                current_number = current_number + interval
+                top.append(current_number)
+                
+                # Append Class Bottom Limit
+                current_bottom_limit = old_number - 0.5
+                bottom_limit.append(current_bottom_limit)
+
+                # Append Class Top Limit
+                current_top_limit = current_number + 0.5
+                top_limit.append(current_top_limit)
+
+                # Finding The Frequency That Range
+                current_frequency = self.find_frequency(old_number, current_number + 1)
+                frequency.append(current_frequency)
+
+                # Adding The Number Range From Both Frequency
+                current_data_range = f"{old_number:.2f} ~ {current_number:.2f}" if not all(isinstance(x, int) for x in self.dataset) else f"{old_number} ~ {current_number}"
+                data_range.append(current_data_range)
+
+                # Adding Data Range Limit Of The Class Frequency
+                current_data_limit = f"{current_bottom_limit:.2f} ~ {current_top_limit:.2f}" if not all(isinstance(x, int) for x in self.dataset) else f"{current_bottom_limit} ~ {current_top_limit}"
+                data_limit.append(current_data_limit)   
+
+                # Adding Data Midpoint of The Class Frequency
+                current_data_midpoint = (old_number + current_number) / 2
+                data_midpoint.append(current_data_midpoint)
+
+                # Adding Bottom Cumulative Frequency of The Class 
+                current_bot_cumulative_frequency = self.find_frequency(self.lowest - 1, old_number)
+                bot_cumulative_frequency.append(current_bot_cumulative_frequency)
+
+                # Adding Top Cumulative Frequency of The Class 
+                current_top_cumulative_frequency = self.find_frequency(current_number + 1, self.highest + 1)
+                top_cumulative_frequency.append(current_top_cumulative_frequency)
             
-            # Finding Class Highest Value 
-            current_number = current_number + interval
-            top.append(current_number)
+                # Counting the Relative Frequency in Percentage
+                current_relative_frequency = np.round((current_frequency / self.length) * 100)
+                relative_frequency.append(current_relative_frequency)    
+
+            # Find Mode or Data that appears most frequently 
+            mode_index = [i for i, val in enumerate(frequency) if val == max(frequency)]
+            mode = [data_range[i] for i in mode_index]
             
-            # Append Class Bottom Limit
-            current_bottom_limit = old_number - 0.5
-            bottom_limit.append(current_bottom_limit)
+            # Append Processed Data into Data Attributes
+            self.grouped = ProcessedData(None, bottom, top, bottom_limit, top_limit, 
+                                         frequency, data_range, data_limit, data_midpoint, 
+                                         bot_cumulative_frequency, top_cumulative_frequency, 
+                                         relative_frequency, mode)
 
-            # Append Class Top Limit
-            current_top_limit = current_number + 0.5
-            top_limit.append(current_top_limit)
-
-            # Finding The Frequency That Range
-            current_frequency = self.find_frequency(old_number, current_number + 1)
-            frequency.append(current_frequency)
-
-            # Adding The Number Range From Both Frequency
-            current_data_range = f"{old_number:.2f} ~ {current_number:.2f}" if not all(isinstance(x, int) for x in self.dataset) else f"{old_number} ~ {current_number}"
-            data_range.append(current_data_range)
-
-            # Adding Data Range Limit Of The Class Frequency
-            current_data_limit = f"{current_bottom_limit:.2f} ~ {current_top_limit:.2f}" if not all(isinstance(x, int) for x in self.dataset) else f"{current_bottom_limit} ~ {current_top_limit}"
-            data_limit.append(current_data_limit)   
-
-            # Adding Data Midpoint of The Class Frequency
-            current_data_midpoint = (old_number + current_number) / 2
-            data_midpoint.append(current_data_midpoint)
-
-            # Adding Bottom Cumulative Frequency of The Class 
-            current_bot_cumulative_frequency = self.find_frequency(self.lowest - 1, old_number)
-            bot_cumulative_frequency.append(current_bot_cumulative_frequency)
-
-            # Adding Top Cumulative Frequency of The Class 
-            current_top_cumulative_frequency = self.find_frequency(current_number + 1, self.highest + 1)
-            top_cumulative_frequency.append(current_top_cumulative_frequency)
-        
-            # Counting the Relative Frequency in Percentage
-            current_relative_frequency = np.round((current_frequency / self.length) * 100)
-            relative_frequency.append(current_relative_frequency)    
-
-        # Find Mode or Data that appears most frequently 
-        mode_index = [i for i, val in enumerate(frequency) if val == max(frequency)]
-        mode = [data_range[i] for i in mode_index]
-        
-        # Append Processed Data into Data Attributes
-        self.grouped = ProcessedData(None, bottom, top, bottom_limit, top_limit, 
-                                     frequency, data_range, data_limit, data_midpoint, 
-                                     bot_cumulative_frequency, top_cumulative_frequency, 
-                                     relative_frequency, mode)
+        except ValueError as e:
+            print(f"Error: {e}")
 
     # Populate Simple Table Frequency Data Method    
     def PopulateSimple(self):
