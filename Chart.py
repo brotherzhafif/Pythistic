@@ -5,17 +5,12 @@ from matplotlib_venn import venn2, venn3
 
 class Chart:
     def __init__(self, title="", xlabel="", ylabel=""):
-        # Initialize the Chart class with common plotting properties.
-        # title: The title of the chart.
-        # xlabel: Label for the x-axis.
-        # ylabel: Label for the y-axis.
         self.title = title
         self.xlabel = xlabel
         self.ylabel = ylabel
-        self.figure = None  # Placeholder for the plot figure.
+        self.figure = None
 
     def _apply_common_properties(self):
-        # Apply common properties like title, xlabel, and ylabel to the current plot.
         if self.title:
             plt.title(self.title)
         if self.xlabel:
@@ -23,53 +18,46 @@ class Chart:
         if self.ylabel:
             plt.ylabel(self.ylabel)
 
-    def box(self, data, labels=None):
-        # Prepare a bar chart to visualize the values in a box-like manner.
+    def box(self, x_values, y_values, is_range=False):
         self.figure = plt.figure(figsize=(10, 6))
-        bar_width = 0.5  # Width of the bars
-        indices = range(len(data))  # Indices for the bars
+        bar_width = 0.5
+        indices = range(len(y_values))
 
-        plt.bar(indices, data, width=bar_width, alpha=0.7, color='b')
+        plt.bar(indices, y_values, width=bar_width, alpha=0.7, color='b')
 
-        if labels:
-            plt.xticks(indices, labels)  # Set the x-ticks to the provided labels
+        if is_range:
+            plt.xticks(indices, x_values)  # Use ranges as labels
+        else:
+            plt.xticks(indices, [str(x) for x in x_values])
 
         self._apply_common_properties()
-        plt.grid(axis='y')  # Add gridlines to the y-axis for better readability
+        plt.grid(axis='y')
 
-    def pie(self, data, labels):
-        # Prepare a pie chart to show percentage distribution.
-        self.figure = plt.figure(figsize=(8, 8))
-        plt.pie(data, labels=labels, autopct='%1.1f%%', startangle=140)
-        if self.title:
-            plt.title(self.title)
-
-    def line(self, x_values, y_values):
-        # Prepare a line chart to plot the relationship between x and y values.
+    def line(self, x_values, y_values, is_range=False):
         self.figure = plt.figure(figsize=(10, 6))
+        if is_range:
+            x_values = [midpoint for midpoint in x_values]  # Use midpoints for line plot
+
         plt.plot(x_values, y_values, marker='o')
         self._apply_common_properties()
-        plt.grid()  # Display a grid for better readability.
+        plt.grid()
 
-    def histogram(self, data, bins=10):
-        # Prepare a histogram for visualizing the distribution of a dataset.
+    def scatter(self, x_values, y_values, is_range=False):
         self.figure = plt.figure(figsize=(10, 6))
-        plt.hist(data, bins=bins, alpha=0.7, color='b')
-        self._apply_common_properties()
+        if is_range:
+            x_values = [midpoint for midpoint in x_values]  # Use midpoints for scatter plot
 
-    def boxplot(self, data):
-        # Prepare a boxplot using seaborn-like aesthetics for enhanced visualization.
-        self.figure = plt.figure(figsize=(10, 6))
-        plt.boxplot(data)
-        self._apply_common_properties()
-
-    def scatter(self, x_values, y_values):
-        # Prepare a scatter plot to visualize the relationship between two variables.
-        self.figure = plt.figure(figsize=(10, 6))
         plt.scatter(x_values, y_values, alpha=0.6, edgecolors='w', s=100)
         self._apply_common_properties()
-        plt.grid()  # Display a grid for better readability.
+        plt.grid()
 
+    def pie(self, data, labels):
+            # Prepare a pie chart to show percentage distribution.
+            self.figure = plt.figure(figsize=(8, 8))
+            plt.pie(data, labels=labels, autopct='%1.1f%%', startangle=140)
+            if self.title:
+                plt.title(self.title)
+    
     def heatmap(self, data, annot=True, cmap='viridis'):
         # Prepare a heatmap for visualizing a 2D matrix data.
         self.figure = plt.figure(figsize=(12, 8))
