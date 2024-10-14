@@ -62,13 +62,16 @@ class FrequencyTable:
                             ((self.length - 1) * (self.length - 2) * (self.length - 3))) - \
                             (3 * (self.length - 1) ** 2) / ((self.length - 2) * (self.length - 3))
 
-    # Method to reset the processed data
-    def reset_data(self):
+    # Base 5 Rounding
+    def roundy(self, x, base=5):
+        return base * round(x / base)
+
+    # Function to Reset Frequency Table Data
+    def reset(self):
         global top, bottom, top_limit, bottom_limit, frequency
         global data_range, data_limit, data_midpoint
         global bot_cumulative_frequency, top_cumulative_frequency, relative_frequency, mode
-
-        # Clear all global variables used for data processing
+        
         top.clear()
         bottom.clear()
         top_limit.clear()
@@ -81,10 +84,6 @@ class FrequencyTable:
         top_cumulative_frequency.clear()
         relative_frequency.clear()
         mode.clear()
-
-    # Base 5 Rounding
-    def roundy(self, x, base=5):
-        return base * round(x / base)
 
     # Function To Find Frequency in Dataset with Desired Range (Top and Down Limit)
     def find_frequency(self, bot, top):
@@ -109,8 +108,7 @@ class FrequencyTable:
 
     # Populate Grouped Table Frequency Data Method
     def PopulateGrouped(self):
-        # Reset data before populating
-        self.reset_data()
+        self.reset()  # Reset the frequency table data before processing
 
         # Initiating Used Parameter for Frequency Table
         old_number = 0
@@ -173,20 +171,17 @@ class FrequencyTable:
                                      frequency, data_range, data_limit, data_midpoint, 
                                      bot_cumulative_frequency, top_cumulative_frequency, 
                                      relative_frequency, mode)
-    
+
     # Populate Simple Table Frequency Data Method    
     def PopulateSimple(self):
-        # Reset data before populating
-        self.reset_data()
+        self.reset()  # Reset the frequency table data before processing
 
         # Initialize general variables
         data = sorted(set(self.dataset))  # Remove duplicates and sort the data
         
-        # Check if the dataset is not entirely string-based (for numeric data)
-        if not all(isinstance(item, str) for item in self.dataset):
-            # Initialize limits for numeric data
-            top_limit = []
-            bottom_limit = []
+        # Initialize limits for numeric data
+        top_limit = []
+        bottom_limit = []
 
         # Single loop to process both numeric and string data
         for current_class in data:
@@ -199,7 +194,7 @@ class FrequencyTable:
             relative_frequency.append(current_relative_frequency)
 
             # If the data is numeric, calculate limits and cumulative frequencies
-            if top_limit is not None and bottom_limit is not None:
+            if not all(isinstance(item, str) for item in self.dataset):
                 # Calculate top and bottom limits for numeric data
                 current_top_limit = current_class + 0.5
                 current_bottom_limit = current_class - 0.5
@@ -235,7 +230,7 @@ class FrequencyTable:
             bot_cumulative_frequency, top_cumulative_frequency, 
             relative_frequency, mode
         )
-        
+
 # Processed Data Assignment 
 class ProcessedData:
     # Limit (L), Frequency (F), Ranges (R), Midpoint (M), Cumulative (C), Relative (R) 
