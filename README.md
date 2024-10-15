@@ -13,6 +13,7 @@
 - Numpy
 - Tabulate
 - Pandas
+- Scipy
 
 ### Structure
 - Program Structure
