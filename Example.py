@@ -77,10 +77,6 @@ chart.box(data.simple.classval, data.simple.frequency)
 # Display the prepared chart
 chart.show()
 
-# Example for pie chart
-data.PopulateGrouped()  # Grouped Data
-chart = ct.Chart(title="Grouped Frequency Pie Chart")
-chart.pie(data.grouped.frequency, labels=data.grouped.ranges)
-chart.show()
+
 
 
