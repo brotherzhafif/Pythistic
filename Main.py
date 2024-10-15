@@ -3,6 +3,7 @@ import Chart as ct
 import FrequencyTable as ft
 import pandas as pd
 import tabulate as tabulate
+import Transform as tf
 
 # Raw Data
 dataset = [
@@ -19,13 +20,20 @@ chart = ct.Chart(title="Dataset Box Diagram", xlabel="Data", ylabel="Value")
 data = ft.FrequencyTable(dataset)
 data.PopulateSimple()
 # Prepare a box diagram
-chart.box(data.simple.classval, data.simple.frequency)
+chart.box(data.simple.frequency, data.simple.classval)
 
 # Display the prepared chart
 chart.show()
 
-# Example for pie chart
-data.PopulateGrouped()  # Grouped Data
-chart = ct.Chart(title="Grouped Frequency Pie Chart")
-chart.pie(data.grouped.frequency, labels=data.grouped.ranges)
+# Initialize the chart object with common properties
+chart = ct.Chart(title="Dataset Box Diagram", xlabel="Data", ylabel="Value")
+
+dataset_tf = tf.Transform(dataset).box_cox_transform()
+data2 = ft.FrequencyTable(dataset_tf)
+data2.PopulateSimple()
+# Prepare a box diagram
+chart.box(data2.simple.frequency, data2.simple.classval)
+
+# Display the prepared chart
 chart.show()
+
