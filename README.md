@@ -1,5 +1,5 @@
 # Python Statistic Program 
-> My Statistic Tools made with Python 
+> A Python library for performing descriptive statistical analysis, converting raw data into frequency tables, and transforming data for visualization and further analysis.
 
 ### Features
 - Auto Classify Data Into Frequency Table
