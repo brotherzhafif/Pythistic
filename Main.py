@@ -1,5 +1,5 @@
 # EXAMPLE PROGRAM
-import FrequencyTable as ft
+from FrequencyTable import Classify
 import tabulate as tabulate
 import Transform as tf
 import pandas as pd
@@ -18,9 +18,8 @@ dataset = [
     12.9, 12.8, 12.7, 12.6, 12.5, 12.4
 ]
 
-
 # Initiate Object From The Raw Data
-data = ft.FrequencyTable(dataset)
+data = Classify(dataset)
 data.populate_simple() # Simple Data
 
 # Simple Populated Data
@@ -67,6 +66,7 @@ tablegrouped = tabulate.tabulate(
     headers='keys',
     tablefmt='pipe',
 )
+print(data.interval)
 print(tablegrouped)
 print(data.grouped.mode)
 print(data.mean)

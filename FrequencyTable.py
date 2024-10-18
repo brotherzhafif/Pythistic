@@ -1,85 +1,31 @@
 import numpy as np
+from Calculations import Describe
+from Summary import Result
 
-class StatisticalCalculations:
-    @staticmethod
-    def mean(dataset):
-        return sum(dataset) / len(dataset)
-
-    @staticmethod
-    def variance(dataset, mean):
-        return sum((x - mean) ** 2 for x in dataset) / len(dataset)
-
-    @staticmethod
-    def standard_deviation(variance):
-        return variance ** 0.5
-
-    @staticmethod
-    def skewness(dataset, mean, deviation):
-        n = len(dataset)
-        return (n / ((n - 1) * (n - 2))) * sum(((x - mean) / deviation) ** 3 for x in dataset)
-
-    @staticmethod
-    def kurtosis(dataset, mean, deviation):
-        n = len(dataset)
-        return (n * (n + 1) * sum(((x - mean) / deviation) ** 4 for x in dataset) /
-                ((n - 1) * (n - 2) * (n - 3))) - (3 * (n - 1) ** 2) / ((n - 2) * (n - 3))
-    
-    @staticmethod
-    def median(dataset):
-        sorted_data = sorted(dataset)
-        n = len(sorted_data)
-        mid = n // 2
-
-        if n % 2 == 0:  # If even, return the average of the two middle numbers
-            return (sorted_data[mid - 1] + sorted_data[mid]) / 2
-        else:  # If odd, return the middle number
-            return sorted_data[mid]
-
-# Processed Data Assignment 
-class ProcessedData:
-    def __init__(self, data, bot, top, bot_L, top_L, F, R, L, M, bot_CF, top_CF, RF, mode):
-        self.top = top
-        self.limit = L     
-        self.ranges = R      
-        self.bottom = bot
-        self.midpoint = M
-        self.frequency = F
-        self.classval = data
-        self.top_limit = top_L
-        self.bottom_limit = bot_L
-        self.mode = mode
-        self.bottom_cumulative_frequency = bot_CF
-        self.top_cumulative_frequency = top_CF
-        self.relative_frequency = RF
-        self.percentage_relative_frequency = [f"{rf:.2f}%" for rf in self.relative_frequency]
-
-# Frequency Table Class 
-class FrequencyTable:
+class Classify:
     def __init__(self, dataset):
-        # Check for mixed data types
         if any(isinstance(item, str) for item in dataset) and any(isinstance(item, (int, float)) for item in dataset):
             raise ValueError("Data is corrupted: contains both numeric and string values.")
 
-        # Data Initiation
         self.dataset = sorted(dataset)
         self.length = len(dataset)
         self.lowest = min(dataset) if isinstance(dataset[0], (int, float)) else None
         self.highest = max(dataset) if isinstance(dataset[0], (int, float)) else None
 
-        if self.lowest is not None:  # Only calculate classes for numeric data
-            self.calculate_statistics()
-            self.calculate_classes()
+        if self.lowest is not None:
+            self._calculate_statistics()
+            self._calculate_classes()
 
-    def calculate_statistics(self):
+    def _calculate_statistics(self):
         self.sum = sum(self.dataset)
-        self.mean = StatisticalCalculations.mean(self.dataset)
-        self.median = StatisticalCalculations.median(self.dataset)
-        self.variance = StatisticalCalculations.variance(self.dataset, self.mean)
-        self.deviation = StatisticalCalculations.standard_deviation(self.variance)
-        self.skewness = StatisticalCalculations.skewness(self.dataset, self.mean, self.deviation)
-        self.kurtosis = StatisticalCalculations.kurtosis(self.dataset, self.mean, self.deviation)
+        self.mean = Describe.mean(self.dataset)
+        self.median = Describe.median(self.dataset)
+        self.variance = Describe.variance(self.dataset, self.mean)
+        self.deviation = Describe.standard_deviation(self.variance)
+        self.skewness = Describe.skewness(self.dataset, self.mean, self.deviation)
+        self.kurtosis = Describe.kurtosis(self.dataset, self.mean, self.deviation)
 
-    def calculate_classes(self):
+    def _calculate_classes(self):
         self.classes = 1 + (3.222 * np.log10(self.length))
         self.classes = round(self.classes - 0.5)
         self.range = self.highest - self.lowest
@@ -113,8 +59,9 @@ class FrequencyTable:
         
         # Initiating Variables for Frequency Table
         current_number = self.base - 1
+        top_cumulative_freq = 1
 
-        while True:
+        while top_cumulative_freq != 0:
             old_number = current_number + 1
             self.bottom.append(old_number)
 
@@ -144,15 +91,12 @@ class FrequencyTable:
             current_relative_frequency = np.round((current_frequency / self.length) * 100)
             self.relative_frequency.append(current_relative_frequency)
 
-            if current_frequency == 0:
-                break
-
         # Find Mode
         mode_index = [i for i, val in enumerate(self.frequency) if val == max(self.frequency)]
         self.mode = [self.data_range[i] for i in mode_index]
 
-        # Create ProcessedData object
-        self.grouped = ProcessedData(None, self.bottom, self.top, self.bottom_limit, self.top_limit,
+        # Create Result object
+        self.grouped = Result(None, self.bottom, self.top, self.bottom_limit, self.top_limit,
                                      self.frequency, self.data_range, self.data_limit, self.data_midpoint,
                                      self.bot_cumulative_frequency, self.top_cumulative_frequency,
                                      self.relative_frequency, self.mode,
@@ -184,8 +128,8 @@ class FrequencyTable:
         mode_index = [i for i, val in enumerate(self.frequency) if val == max(self.frequency)]
         self.mode = [unique_data[i] for i in mode_index]
 
-        # Create ProcessedData object
-        self.simple = ProcessedData(
+        # Create Result object
+        self.simple = Result(
             unique_data, None, None, self.bottom_limit, self.top_limit, 
             self.frequency, None, None, None, 
             self.bot_cumulative_frequency, self.top_cumulative_frequency, 
