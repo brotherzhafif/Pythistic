@@ -1,8 +1,5 @@
 # EXAMPLE PROGRAM
-import Chart as ct
 import FrequencyTable as ft
-import pandas as pd
-import tabulate as tabulate
 import Transform as tf
 
 # Raw Data
@@ -14,26 +11,5 @@ dataset = [
     98.3, 98.1, 98.0, 99.5, 99.4, 99.6, 99.1, 99.2, 99.3, 99.0
 ]
 
-# Initialize the chart object with common properties
-chart = ct.Chart(title="Dataset Box Diagram", xlabel="Data", ylabel="Value")
 
-data = ft.FrequencyTable(dataset)
-data.PopulateSimple()
-# Prepare a box diagram
-chart.box(data.simple.frequency, data.simple.classval)
-
-# Display the prepared chart
-chart.show()
-
-# Initialize the chart object with common properties
-chart = ct.Chart(title="Dataset Box Diagram", xlabel="Data", ylabel="Value")
-
-dataset_tf = tf.Transform(dataset).box_cox_transform()
-data2 = ft.FrequencyTable(dataset_tf)
-data2.PopulateSimple()
-# Prepare a box diagram
-chart.box(data2.simple.frequency, data2.simple.classval)
-
-# Display the prepared chart
-chart.show()
 
