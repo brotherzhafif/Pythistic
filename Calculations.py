@@ -1,4 +1,4 @@
-class Describe:
+class Calculate:
     @staticmethod
     def mean(dataset):
         return sum(dataset) / len(dataset)

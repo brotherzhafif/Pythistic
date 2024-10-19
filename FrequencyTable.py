@@ -1,6 +1,6 @@
 import numpy as np
-from Calculations import Describe
-from Summary import Result
+from Calculations import Calculate
+from Data import Result
 
 class Classify:
     def __init__(self, dataset):
@@ -18,12 +18,12 @@ class Classify:
 
     def _calculate_statistics(self):
         self.sum = sum(self.dataset)
-        self.mean = Describe.mean(self.dataset)
-        self.median = Describe.median(self.dataset)
-        self.variance = Describe.variance(self.dataset, self.mean)
-        self.deviation = Describe.standard_deviation(self.variance)
-        self.skewness = Describe.skewness(self.dataset, self.mean, self.deviation)
-        self.kurtosis = Describe.kurtosis(self.dataset, self.mean, self.deviation)
+        self.mean = Calculate.mean(self.dataset)
+        self.median = Calculate.median(self.dataset)
+        self.variance = Calculate.variance(self.dataset, self.mean)
+        self.deviation = Calculate.standard_deviation(self.variance)
+        self.skewness = Calculate.skewness(self.dataset, self.mean, self.deviation)
+        self.kurtosis = Calculate.kurtosis(self.dataset, self.mean, self.deviation)
 
     def _calculate_classes(self):
         self.classes = 1 + (3.222 * np.log10(self.length))
