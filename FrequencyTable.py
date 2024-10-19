@@ -1,6 +1,6 @@
 import numpy as np
-from Calculations import Calculate
-from Data import Result
+from .Calculations import Calculate
+from .Data import Result
 
 class Classify:
     def __init__(self, dataset):
