@@ -1,5 +1,5 @@
 # Python Statistic Program 
-> A Python library for performing descriptive statistical analysis, converting raw data into frequency tables, and transforming data for visualization and further analysis.
+> A Python library for performing descriptive statistical analysis, converting raw data into frequency tables, and transforming data to normalize the distribution.
 
 ### Features
 - Auto Classify Data Into Frequency Table
