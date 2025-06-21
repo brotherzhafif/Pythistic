@@ -2,7 +2,7 @@
 # Set default behavior to automatically normalize line endings.
 ###############################################################################
 * text=auto
-*.ipynb linguist-detectable=false
+*.ipynb diff=php linguist-detectable=true
 
 ###############################################################################
 # Set default behavior for command prompt diff.
